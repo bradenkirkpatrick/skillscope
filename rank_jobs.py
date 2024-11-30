@@ -1,10 +1,28 @@
+import pandas
+from string import digits
+import re
 
-# The point of this script is to rank jobs based on qualifications.
-# main takes in a list of jobs strings and a list of personal qualifications.
 
+global POSSIBLE_QUALIFICATIONS, JOBS
 POSSIBLE_QUALIFICATIONS = list()
-with open('qualifications.txt') as f:
-    POSSIBLE_QUALIFICATIONS = [x.strip() for x in f.readlines()]
+JOBS = list() 
+
+def get_qualifications():
+    with open('qualifications.txt') as f:
+        return [x.strip() for x in f.readlines()]
+
+def get_jobs():
+    jobs = pandas.read_csv('rit_jobs.csv')
+    jobs_ = [' '.join(set(x.strip().split())) for x in jobs['job_description']]
+    remove_digits = str.maketrans('', '', digits)
+    for i in range(len(jobs)):
+        jobs_[i] = jobs_[i].translate(remove_digits)
+    jobs_ = [re.sub(r'[./$()]', '', job) for job in jobs_]
+    return [' '.join(job.split()) for job in jobs_]
+
+
+POSSIBLE_QUALIFICATIONS = get_qualifications()
+JOBS = get_jobs()
 
 def check_new_qualifications(qualifications):
     for qualification in qualifications:
@@ -44,16 +62,14 @@ def get_best_jobs(jobs, personal_qualifications):
         ranked_jobs_list.append((jobs[i][:15], round(num, 2)))
     return ranked_jobs_list
 
-def main(job, personal_qualifications):
-    personal_qualifications.lower()
+def main(personal_qualifications):
     check_new_qualifications(personal_qualifications)
-    ranked_jobs_list = sorted(get_best_jobs(job, personal_qualifications), key=lambda x: -x[1])
+    ranked_jobs_list = sorted(get_best_jobs(JOBS, personal_qualifications), key=lambda x: -x[1])
     print(ranked_jobs_list)
 
 if __name__ == "__main__":
-    JOBS = ["I like python. Program some python for me: 1,000,000₽.", "Nah, bitch, c++ is king.", "james bond.", "c and python with java", "python java bash go"] #just a placeholder
-    PERSONAL_QUALIFICATIONS = ["python", "c"] #just a placeholder
-    main(JOBS, PERSONAL_QUALIFICATIONS)
+    PERSONAL_QUALIFICATIONS = ["python", "c"]
+    main(PERSONAL_QUALIFICATIONS)
 
 
 
