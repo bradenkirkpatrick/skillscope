@@ -45,3 +45,9 @@ for json_file in json_files:
 
 # Output the matched information as JSON
 print(json.dumps(matched_info))
+
+# Save the matched information to a file
+output_file_path = 'compareD/compareD.json'
+outp = os.path.join(script_dir, output_file_path)
+with open(outp, 'w') as output_file:
+    json.dump(matched_info, output_file, indent=2)

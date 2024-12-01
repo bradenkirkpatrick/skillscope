@@ -1,0 +1,126 @@
+{
+  "Tools": [
+    {
+      "skill": "git",
+      "proficiency": 11.04
+    },
+    {
+      "skill": "docker",
+      "proficiency": 7.36
+    },
+    {
+      "skill": "kubernetes",
+      "proficiency": 6.13
+    },
+    {
+      "skill": "jenkins",
+      "proficiency": 3.07
+    },
+    {
+      "skill": "gitlab",
+      "proficiency": 3.07
+    },
+    {
+      "skill": "github",
+      "proficiency": 1.84
+    },
+    {
+      "skill": "ansible",
+      "proficiency": 1.84
+    },
+    {
+      "skill": "terraform",
+      "proficiency": 1.84
+    },
+    {
+      "skill": "eclipse",
+      "proficiency": 1.23
+    },
+    {
+      "skill": "pycharm",
+      "proficiency": 0.61
+    },
+    {
+      "skill": "grafana",
+      "proficiency": 0.61
+    },
+    {
+      "skill": "prometheus",
+      "proficiency": 0.61
+    }
+  ],
+  "Soft Skills": [
+    {
+      "skill": "communication",
+      "proficiency": 32.12
+    },
+    {
+      "skill": "documentation",
+      "proficiency": 6.71
+    },
+    {
+      "skill": "compliance",
+      "proficiency": 6.0
+    },
+    {
+      "skill": "flexibility",
+      "proficiency": 1.88
+    },
+    {
+      "skill": "motivation",
+      "proficiency": 0.82
+    }
+  ],
+  "Libraries": [
+    {
+      "skill": "dash",
+      "proficiency": 7.69
+    }
+  ],
+  "Languages": [
+    {
+      "skill": "python",
+      "proficiency": 24.38
+    },
+    {
+      "skill": "java",
+      "proficiency": 15.07
+    },
+    {
+      "skill": "sql",
+      "proficiency": 11.78
+    },
+    {
+      "skill": "javascript",
+      "proficiency": 8.77
+    },
+    {
+      "skill": "powershell",
+      "proficiency": 2.19
+    },
+    {
+      "skill": "bash",
+      "proficiency": 1.64
+    },
+    {
+      "skill": "typescript",
+      "proficiency": 1.37
+    },
+    {
+      "skill": "perl",
+      "proficiency": 1.37
+    },
+    {
+      "skill": "shell",
+      "proficiency": 1.37
+    },
+    {
+      "skill": "ruby",
+      "proficiency": 0.27
+    },
+    {
+      "skill": "php",
+      "proficiency": 0.27
+    }
+  ]
+}

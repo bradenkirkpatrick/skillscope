@@ -4,9 +4,13 @@ import path from 'path';
 import fs from 'fs';
 import cors from 'cors';
 import { exec } from 'child_process';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(cors());
 app.use(fileUpload());
@@ -55,6 +59,35 @@ app.post('/ats-review', (req, res) => {
     } catch (parseError) {
       console.error(`Error parsing script output: ${parseError.message}`);
       res.status(500).json({ error: 'Invalid response from processing script.' });
+    }
+  });
+});
+
+app.post('/run-text-data-comp', (req, res) => {
+  const resumePath = path.join(__dirname, 'uploads', 'resume.pdf');
+  
+  // Check if resume exists
+  if (!fs.existsSync(resumePath)) {
+    return res.status(400).json({ error: 'Resume not found. Please upload a resume first.' });
+  }
+
+  // Run the curl command
+  exec(`curl -v -X POST -H 'Content-Type: multipart/form-data' 'http://localhost:8080/api/v1/executions/skillscope.data/resumeReview'`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing curl command: ${error.message}`);
+      return res.status(500).json({ error: `Error executing curl command: ${error.message}` });
+    }
+    if (stderr) {
+      console.error(`Curl stderr: ${stderr}`);
+      return res.status(500).json({ error: `Curl stderr: ${stderr}` });
+    }
+
+    try {
+      const result = JSON.parse(stdout);
+      res.json(result);
+    } catch (parseError) {
+      console.error(`Error parsing curl output: ${parseError.message}`);
+      res.status(500).json({ error: `Error parsing curl output: ${parseError.message}` });
     }
   });
 });

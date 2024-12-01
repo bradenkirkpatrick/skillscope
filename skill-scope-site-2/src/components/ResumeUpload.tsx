@@ -33,10 +33,10 @@ export const ResumeUpload: React.FC = () => {
   const handleReview = async () => {
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/ats-review');
-      setReviewResult(response.data);
+      await axios.post('http://localhost:5000/run-text-data-comp');
+      console.log('Python script executed successfully');
     } catch (error) {
-      console.error('Error during ATS review:', error);
+      console.error('Error executing Python script:', error);
     } finally {
       setLoading(false);
     }
