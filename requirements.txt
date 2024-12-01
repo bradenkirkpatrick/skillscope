@@ -3,3 +3,5 @@ bs4
 selenium
 wordcloud
 pandas
+matplotlib
+python-dotenv
