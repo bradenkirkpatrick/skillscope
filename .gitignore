@@ -4,3 +4,4 @@ Search Results.html
 .env
 node_modules
 database.mv.db
+data/
