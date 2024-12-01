@@ -8,6 +8,9 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import time
 import os
+from dotenv import load_dotenv
+
+
 
 def generate_wordcloud(df):
     text = ' '.join(df['column_name'].astype(str).tolist())
@@ -53,9 +56,12 @@ def scrape_rit_jobs(query, num_pages=5, username='', password=''):
     return df
 
 def main():
-    username = os.getenv('USERNAME')  # Replace with environment variable
+    load_dotenv()
+    username = os.getenv('KUSERNAME')  # Replace with environment variable
+    # print(username)
     password = os.getenv('PASSWORD')  # Replace with environment variable
-    df = scrape_rit_jobs("Software Engineer", username=username, password=password, num_pages=1762)
+    # print(password)
+    df = scrape_rit_jobs("Software Engineer", username=username, password=password, num_pages=5)
     # Save df to a CSV file
     df.to_csv('rit_jobs.csv', index=True)
     # generate_wordcloud(df)
