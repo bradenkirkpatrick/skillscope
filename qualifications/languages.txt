@@ -1,5 +1,4 @@
 python
-c
 c++
 java
 javascript
@@ -9,18 +8,15 @@ css
 php
 ruby
 swift
-r
 matlab
 perl
 bash
 shell
 powershell
-go
 rust
 kotlin
 typescript
 coffeescript
-lua
 groovy
 elixir
 haskell
@@ -46,7 +42,6 @@ soql
 sfdx
 sosl
 lightning
-aura
 visualbasic
 vba
 vbscript
