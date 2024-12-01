@@ -49,12 +49,12 @@ def check_new_qualifications(qualifications, list_):
     return list_
 
 def job_qualifications_list(job, qualifications_list):
-    job = set(job.lower().split())
+    job = job.lower()
 
     qualifications = set()
-    for i in range(len(qualifications_list)):
-        if qualifications_list[i] in job:
-            qualifications.add(qualifications_list[i])
+    for qualification in qualifications_list:
+        if qualification in job:
+            qualifications.add(qualification)
     return qualifications
 
 # basic algorithm to rank jobs based on qualifications # replace with ML model?
