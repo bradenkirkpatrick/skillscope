@@ -3,6 +3,7 @@ from string import digits
 import re
 
 
+
 def get_languages():
     with open('qualifications/languages.txt') as f:
         return [x.strip() for x in f.readlines()]
@@ -20,7 +21,7 @@ def get_softskills():
         return [x.strip() for x in f.readlines()]
 
 def get_jobs():
-    jobs = pandas.read_csv('rit_jobs.csv')
+    jobs = pandas.read_csv('cleanedJobs.csv')
     jobs_ = [' '.join(set(x.strip().split())) for x in jobs['job_description']]
     remove_digits = str.maketrans('', '', digits)
     for i in range(len(jobs)):
