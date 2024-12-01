@@ -3,6 +3,7 @@ import fileUpload from 'express-fileupload';
 import path from 'path';
 import fs from 'fs';
 import cors from 'cors';
+import { exec } from 'child_process';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -26,6 +27,35 @@ app.post('/upload', (req, res) => {
     }
 
     res.send('File uploaded!');
+  });
+});
+
+app.post('/ats-review', (req, res) => {
+  const resumePath = path.join(__dirname, 'uploads', 'resume.pdf');
+  
+  // Check if resume exists
+  if (!fs.existsSync(resumePath)) {
+    return res.status(400).json({ error: 'Resume not found. Please upload a resume first.' });
+  }
+
+  // Run the Python script
+  exec(`python3 rank_jobs.py`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing script: ${error.message}`);
+      return res.status(500).json({ error: 'Error processing resume.' });
+    }
+    if (stderr) {
+      console.error(`Script stderr: ${stderr}`);
+      return res.status(500).json({ error: 'Error processing resume.' });
+    }
+
+    try {
+      const result = JSON.parse(stdout);
+      res.json(result);
+    } catch (parseError) {
+      console.error(`Error parsing script output: ${parseError.message}`);
+      res.status(500).json({ error: 'Invalid response from processing script.' });
+    }
   });
 });
 
