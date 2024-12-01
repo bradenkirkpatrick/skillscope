@@ -1,15 +1,100 @@
-communication
-leadership
-adaptability
-solving
-time management
-teamwork
-creativity
-emotional intelligence
-conflict resolution
-critical thinking
-decision making
-interpersonal skills
+Communication
+Leadership
+Adaptability
+Problem-solving
+Time management
+Teamwork
+Creativity
+Emotional intelligence
+Conflict resolution
+Critical thinking
+Decision making
+Interpersonal skills
 Work ethic
 Attention to detail
-flexibility
+Flexibility
+Patience
+Empathy
+Active listening
+Negotiation
+Persuasion
+Collaboration
+Initiative
+Resilience
+Stress management
+Self-motivation
+Accountability
+Open-mindedness
+Curiosity
+Analytical thinking
+Strategic thinking
+Innovation
+Resourcefulness
+Delegation
+Mentoring
+Coaching
+Networking
+Public speaking
+Presentation skills
+Writing skills
+Reading comprehension
+Research skills
+Organizational skills
+Planning
+Prioritization
+Goal setting
+Multitasking
+Conflict management
+Mediation
+Diplomacy
+Cultural awareness
+Adaptability to change
+Customer service
+Client management
+Relationship building
+Trustworthiness
+Integrity
+Professionalism
+Reliability
+Dependability
+Enthusiasm
+Positive attitude
+Self-awareness
+Self-regulation
+Motivation
+Social skills
+Team building
+Facilitation
+Influencing
+Negotiation
+Problem identification
+Problem analysis
+Solution-oriented mindset
+Decision analysis
+Risk management
+Quality assurance
+Continuous improvement
+Process optimization
+Systems thinking
+Technical writing
+Documentation
+User experience (UX) understanding
+User interface (UI) understanding
+Agile methodology
+Scrum framework
+Kanban methodology
+Project management
+Change management
+Incident management
+Service management
+Vendor management
+Budgeting
+Financial acumen
+Market awareness
+Competitive analysis
+Business acumen
+Ethical judgment
+Legal awareness
+Compliance
+Data privacy awareness
+Cybersecurity awareness
