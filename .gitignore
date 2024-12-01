@@ -3,7 +3,6 @@ Search Results_files
 Search Results.html
 .env
 node_modules
-database.mv.db
 data/
 test.py
 word_frequencies.txt
