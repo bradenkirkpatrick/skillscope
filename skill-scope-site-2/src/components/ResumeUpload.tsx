@@ -1,8 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Upload } from 'lucide-react';
 import axios from 'axios';
 
 export const ResumeUpload: React.FC = () => {
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [reviewResult, setReviewResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const handleFileChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file.type === 'application/pdf') {
@@ -17,6 +21,7 @@ export const ResumeUpload: React.FC = () => {
         });
 
         console.log('File uploaded successfully');
+        setIsUploaded(true);
       } catch (error) {
         console.error('Error uploading file:', error);
       }
@@ -24,6 +29,18 @@ export const ResumeUpload: React.FC = () => {
       alert('Please select a PDF file');
     }
   }, []);
+
+  const handleReview = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post('http://localhost:5000/ats-review');
+      setReviewResult(response.data);
+    } catch (error) {
+      console.error('Error during ATS review:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow">
@@ -45,6 +62,23 @@ export const ResumeUpload: React.FC = () => {
           />
         </label>
       </div>
+      {isUploaded && (
+        <div className="mt-4">
+          <p className="text-green-500">Resume uploaded successfully!</p>
+          <button
+            onClick={handleReview}
+            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            {loading ? 'Reviewing...' : 'ATS Review'}
+          </button>
+          {reviewResult && (
+            <div className="mt-4">
+              {/* Display review results here */}
+              <pre>{JSON.stringify(reviewResult, null, 2)}</pre>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
