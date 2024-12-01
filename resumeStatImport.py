@@ -10,7 +10,7 @@ def format_data(data):
     """Format data to match the structure of mockStats.ts."""
     def format_entries(entries):
         return [
-            f"{{ name: '{entry['skill']}', value: '{entry['proficiency']}%' }}"
+            f"{{ name: \"{entry['skill']}\", value: \"{entry['proficiency']}%\" }}"
             for entry in entries
         ]
     
@@ -26,10 +26,10 @@ def write_resume_stats(formatted_data):
     content = (
         "import { StatsData } from '../types/stats';\n"
         "export const resumeStats: StatsData = {\n"
-        f"languages: [\n{',\n'.join(formatted_data['languages'])}\n],"
-        f"libraries: [\n{',\n'.join(formatted_data['libraries'])}\n],"
-        f"tools: [\n{',\n'.join(formatted_data['tools'])}\n],"
-        f"softSkills: [\n{',\n'.join(formatted_data['softSkills'])}\n],"
+        f"languages: [\n{', '.join(formatted_data['languages'])}\n],\n"
+        f"libraries: [\n{', '.join(formatted_data['libraries'])}\n],\n"
+        f"tools: [\n{', '.join(formatted_data['tools'])}\n],\n"
+        f"softSkills: [\n{', '.join(formatted_data['softSkills'])}\n]\n"
         "};"
     )
     with open('skill-scope-site-2/src/data/resumeStats.ts', 'w') as f:
