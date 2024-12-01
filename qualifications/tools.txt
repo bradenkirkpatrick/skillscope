@@ -107,3 +107,6 @@ Puppeteer
 TestCafe
 Cucumber
 Appium
+Mobile Computing 
+Autocad
+Microsoft Office

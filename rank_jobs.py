@@ -1,161 +1,164 @@
-import pandas
-from string import digits
+import pandas as pd
 import re
+from string import digits
 
-
-
+# Functions to read qualifications from text files
 def get_languages():
+    """Read programming languages from 'qualifications/languages.txt'."""
     with open('qualifications/languages.txt') as f:
-        return [x.strip() for x in f.readlines()]
+        return [line.strip().lower() for line in f]
 
 def get_libraries():
+    """Read programming libraries from 'qualifications/libraries.txt'."""
     with open('qualifications/libraries.txt') as f:
-        return [x.strip() for x in f.readlines()]
-    
+        return [line.strip().lower() for line in f]
+
 def get_tools():
+    """Read tools from 'qualifications/tools.txt'."""
     with open('qualifications/tools.txt') as f:
-        return [x.strip() for x in f.readlines()]
-    
+        return [line.strip().lower() for line in f]
+
 def get_softskills():
+    """Read soft skills from 'qualifications/softskills.txt'."""
     with open('qualifications/softskills.txt') as f:
-        return [x.strip() for x in f.readlines()]
+        return [line.strip().lower() for line in f]
 
+# Function to read and clean job descriptions from CSV file
 def get_jobs():
-    jobs = pandas.read_csv('cleanedJobs.csv')
-    jobs_ = [' '.join(set(x.strip().split())) for x in jobs['job_description']]
+    """Read and clean job descriptions from 'cleanedJobs.csv'."""
+    jobs = pd.read_csv('cleanedJobs.csv')
+    jobs.columns = jobs.columns.str.strip().str.replace(r'^\W+|\W+$', '', regex=True)
+    # Identify the 'job_description' column
+    job_desc_col = next((col for col in jobs.columns if 'job_description' in col.lower()), None)
+    if not job_desc_col:
+        raise KeyError("The 'job_description' column is missing from the cleanedJobs.csv file.")
+
+    job_descriptions = jobs[job_desc_col].fillna('').astype(str)
     remove_digits = str.maketrans('', '', digits)
-    for i in range(len(jobs)):
-        jobs_[i] = jobs_[i].translate(remove_digits)
-    jobs_ = [re.sub(r'[./$()]', '', job) for job in jobs_]
-    return [' '.join(job.split()) for job in jobs_]
+    cleaned_jobs = []
+    for description in job_descriptions:
+        description = ' '.join(set(description.strip().split()))
+        description = description.translate(remove_digits)
+        # Remove special characters and punctuation
+        description = re.sub(r'[^\w\s]', ' ', description)
+        # Convert to lowercase
+        description = description.lower()
+        cleaned_jobs.append(' '.join(description.split()))
+    return cleaned_jobs
 
+# Function to check and add new qualifications to the list
+def check_new_qualifications(qualifications, qualifications_list):
+    """Check and add new qualifications to the list."""
+    for qualification in qualifications:
+        if qualification not in qualifications_list:
+            qualifications_list.append(qualification)
+            with open('qualifications.txt', 'a') as f:
+                f.write(qualification + '\n')
+    return qualifications_list
 
+# Function to extract qualifications from a job description
+def extract_job_qualifications(job_description, qualifications_list):
+    """Extract qualifications from a job description."""
+    qualifications_found = set()
+    for qualification in qualifications_list:
+        # Create a regex pattern to match whole words (case-insensitive)
+        pattern = r'\b' + re.escape(qualification) + r'\b'
+        if re.search(pattern, job_description):
+            qualifications_found.add(qualification)
+    return qualifications_found
+
+# Basic algorithm to rank jobs based on qualifications
+def get_best_jobs(job_descriptions, personal_qualifications):
+    """Rank jobs based on personal qualifications."""
+    ranked_jobs = []
+    for description in job_descriptions:
+        job_qualifications = extract_job_qualifications(description, personal_qualifications)
+        valid_qualifications = job_qualifications & personal_qualifications
+        invalid_qualifications = job_qualifications - personal_qualifications
+        if invalid_qualifications:
+            score = len(valid_qualifications) / len(invalid_qualifications)
+        else:
+            score = len(valid_qualifications)
+        ranked_jobs.append((description[:15], round(score, 2)))
+    return ranked_jobs
+
+# Function to get the most common qualifications of a specific type from jobs
+def get_top_qualifications(job_descriptions, qualification_type):
+    """Get the most common qualifications of a specific type from jobs."""
+    qualifications_count = {}
+    if qualification_type == "languages":
+        skills = POSSIBLE_LANGUAGES
+    elif qualification_type == "libraries":
+        skills = POSSIBLE_LIBRARIES
+    elif qualification_type == "softskills":
+        skills = POSSIBLE_SOFTSKILLS
+    elif qualification_type == "tools":
+        skills = POSSIBLE_TOOLS
+    else:
+        return {}
+    for description in job_descriptions:
+        job_qualifications = extract_job_qualifications(description, skills)
+        for qualification in job_qualifications:
+            qualifications_count[qualification] = qualifications_count.get(qualification, 0) + 1
+    return qualifications_count
+
+# Function to convert counts to percentages
+def convert_counts_to_percentages(counts_dict):
+    """Convert counts in a dictionary to percentages based on total qualifications found."""
+    total_counts = sum(counts_dict.values())
+    for key in counts_dict:
+        counts_dict[key] = round((counts_dict[key] / total_counts) * 100, 2)
+    return counts_dict
+
+# Function to generate mockStats.ts file
+def generate_mock_stats():
+    """Generate the mockStats.ts file with the top qualifications."""
+    best_languages = get_top_qualifications(JOBS, "languages")
+    sorted_languages = dict(sorted(best_languages.items(), key=lambda item: item[1], reverse=True))
+    percentages_languages = convert_counts_to_percentages(sorted_languages)
+    language_keys = list(percentages_languages.keys())
+
+    best_libraries = get_top_qualifications(JOBS, "libraries")
+    sorted_libraries = dict(sorted(best_libraries.items(), key=lambda item: item[1], reverse=True))
+    percentages_libraries = convert_counts_to_percentages(sorted_libraries)
+    library_keys = list(percentages_libraries.keys())
+
+    best_tools = get_top_qualifications(JOBS, "tools")
+    sorted_tools = dict(sorted(best_tools.items(), key=lambda item: item[1], reverse=True))
+    percentages_tools = convert_counts_to_percentages(sorted_tools)
+    tool_keys = list(percentages_tools.keys())
+
+    best_softskills = get_top_qualifications(JOBS, "softskills")
+    sorted_softskills = dict(sorted(best_softskills.items(), key=lambda item: item[1], reverse=True))
+    percentages_softskills = convert_counts_to_percentages(sorted_softskills)
+    softskill_keys = list(percentages_softskills.keys())
+
+    def get_top_5_entries(sorted_keys, percentages_dict):
+        return [
+            f"{{ name: '{sorted_keys[i]}', value: '{percentages_dict[sorted_keys[i]]}%' }}"
+            for i in range(min(5, len(sorted_keys)))
+        ]
+
+    content = (
+        "import { StatsData } from '../types/stats';\n"
+        "export const mockStats: StatsData = {\n"
+        f"languages: [\n{',\n'.join(get_top_5_entries(language_keys, percentages_languages))}\n],"
+        f"libraries: [\n{',\n'.join(get_top_5_entries(library_keys, percentages_libraries))}\n],"
+        f"tools: [\n{',\n'.join(get_top_5_entries(tool_keys, percentages_tools))}\n],"
+        f"softSkills: [\n{',\n'.join(get_top_5_entries(softskill_keys, percentages_softskills))}\n],"
+        "};"
+    )
+
+    with open('skill-scope-site-2/src/data/mockStats.ts', 'w') as f:
+        f.write(content)
+
+# Load qualifications and jobs
 POSSIBLE_LANGUAGES = get_languages()
 POSSIBLE_LIBRARIES = get_libraries()
 POSSIBLE_TOOLS = get_tools()
 POSSIBLE_SOFTSKILLS = get_softskills()
 JOBS = get_jobs()
 
-def check_new_qualifications(qualifications, list_):
-    for qualification in qualifications:
-        if qualification not in list_:
-            list_.append(qualification)
-            with open('qualifications.txt', 'a') as f:
-                f.write(qualification + '\n')
-    list_.append(qualification)
-    return list_
-
-def job_qualifications_list(job, qualifications_list):
-    job = job.lower()
-
-    qualifications = set()
-    for qualification in qualifications_list:
-        if qualification in job:
-            qualifications.add(qualification)
-    return qualifications
-
-# basic algorithm to rank jobs based on qualifications # replace with ML model?
-def get_best_jobs(jobs, personal_qualifications):
-    ranked_jobs_list = list()
-    for i in range(len(jobs)):
-        job_qualifications = job_qualifications_list(jobs[i])
-        # replace with one hot encoding for data processing
-        valid_qualifactions = job_qualifications.intersection(personal_qualifications)
-        invalid_qualifications = job_qualifications.difference(personal_qualifications)
-        #
-        # replace with ML model?
-        try:
-            try:
-                num = len(valid_qualifactions) / len(invalid_qualifications)
-            except ZeroDivisionError:
-                num = len(valid_qualifactions)
-        except ZeroDivisionError:
-            num = 1 / len(invalid_qualifications)
-        #
-        ranked_jobs_list.append((jobs[i][:15], round(num, 2)))
-    return ranked_jobs_list
-
-def get_best(jobs, type):
-    jobs_dict = dict()
-    if type == "languages":
-        skills = POSSIBLE_LANGUAGES
-    elif type == "libraries":
-        skills = POSSIBLE_LIBRARIES
-    elif type == "softkills":
-        skills = POSSIBLE_SOFTSKILLS
-    elif type == "tools":
-        skills = POSSIBLE_TOOLS
-    for job in jobs:
-        job_qualifications = job_qualifications_list(job, skills)
-        for qualification in job_qualifications:
-            if qualification in jobs_dict:
-                jobs_dict[qualification] += 1
-            else:
-                jobs_dict[qualification] = 1
-    return jobs_dict
-
-# def main(personal_qualifications):
-#     check_new_qualifications(personal_qualifications)
-#     ranked_jobs_list = sorted(get_best_jobs(JOBS, personal_qualifications), key=lambda x: -x[1])
-#     print(ranked_jobs_list)
-
-# if __name__ == "__main__":
-#     PERSONAL_QUALIFICATIONS = ["python", "c"]
-#     main(PERSONAL_QUALIFICATIONS)
-
-def percent_of_dict(dictionary, total):
-    for key in dictionary:
-        dictionary[key] = round((dictionary[key] / total) * 100, 2)
-    return dictionary
-
-# if __name__ == "__main__":
-#     # # languages
-#     # best_languages = get_best(JOBS, "languages")
-#     # sorted_best_languages = dict(sorted(best_languages.items(), key=lambda item: item[1], reverse=True))
-#     # print(sorted_best_languages)
-#     # # percent
-#     # print(percent_of_dict(sorted_best_languages, len(JOBS)))
-
-#     # # libraries
-#     # best_libraries = get_best(JOBS, "libraries")
-#     # sorted_best_libraries = dict(sorted(best_libraries.items(), key=lambda item: item[1], reverse=True))
-#     # print(sorted_best_libraries)
-#     # # percent
-#     # print(percent_of_dict(sorted_best_libraries, len(JOBS)))
-
-#     # # tools
-#     # best_tools = get_best(JOBS, "tools")
-#     # sorted_best_tools = dict(sorted(best_tools.items(), key=lambda item: item[1], reverse=True))
-#     # print(sorted_best_tools)
-#     # # percent
-#     # print(percent_of_dict(sorted_best_tools, len(JOBS)))
-
-#     # softskills
-#     best_softskills = get_best(JOBS, "softkills")
-#     sorted_best_softskills = dict(sorted(best_softskills.items(), key=lambda item: item[1], reverse=True))
-#     print(sorted_best_softskills)
-#     # percent
-#     print(percent_of_dict(sorted_best_softskills, len(JOBS)))
-          
-def hit_it_boy():
-    best_languages = get_best(JOBS, "languages")
-    sorted_best_languages = percent_of_dict(dict(sorted(best_languages.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
-    sorted_best_languages_keys = list(sorted_best_languages.keys())
-
-    best_libraries = get_best(JOBS, "libraries")
-    sorted_best_libraries = percent_of_dict(dict(sorted(best_libraries.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
-    sorted_best_libraries_keys = list(sorted_best_libraries.keys())
-
-    best_tools = get_best(JOBS, "tools")
-    sorted_best_tools = percent_of_dict(dict(sorted(best_tools.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
-    sorted_best_tools_keys = list(sorted_best_tools.keys())
-
-    best_softskills = get_best(JOBS, "softkills")
-    sorted_best_softskills = percent_of_dict(dict(sorted(best_softskills.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
-    sorted_best_softskills_keys = list(sorted_best_softskills.keys())
-    hit = "import { StatsData } from '../types/stats';\n export const mockStats: StatsData = {\n languages: [\n"+"{ name: '"+f"{sorted_best_languages_keys[0]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[0]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[1]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[1]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[2]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[2]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[3]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[3]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[4]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[4]]}%'"+" },\n],libraries: ["+"{ name: '"+f"{sorted_best_libraries_keys[0]}"+"', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[0]]}%'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[1]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[1]]}%'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[2]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[2]]}%'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[3]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[3]]}%'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[4]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[4]]}%'"+" },\n],tools: ["+"{ name: '"+f"{sorted_best_tools_keys[0]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[0]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[1]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[1]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[2]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[2]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[3]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[3]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[4]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[4]]}%'"+" },\n],softSkills: [{ name: '"+f"{sorted_best_softskills_keys[0]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[0]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[1]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[1]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[2]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[2]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[3]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[3]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[4]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[4]]}%'"+" },\n],};"
-    with open('skill-scope-site-2/src/data/mockStats.ts', 'w') as f:
-        f.write(hit)
-
+# Example usage
 if __name__ == "__main__":
-    hit_it_boy()
+    generate_mock_stats()
