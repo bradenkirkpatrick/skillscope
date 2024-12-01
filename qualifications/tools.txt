@@ -1,2 +1,22 @@
 vsc
 kestra
+datagrip
+putty
+filezilla
+git
+docker
+jenkins
+postman
+intellij idea
+pycharm
+eclipse
+visual studio
+sublime text
+atom
+jupyter notebook
+anaconda
+kubernetes
+terraform
+aws cli
+azure cli
+gcp cli

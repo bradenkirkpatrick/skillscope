@@ -3,10 +3,6 @@ from string import digits
 import re
 
 
-global POSSIBLE_QUALIFICATIONS, JOBS
-POSSIBLE_LANGUAGES = list()
-JOBS = list() 
-
 def get_languages():
     with open('qualifications/languages.txt') as f:
         return [x.strip() for x in f.readlines()]
@@ -111,34 +107,54 @@ def percent_of_dict(dictionary, total):
         dictionary[key] = round((dictionary[key] / total) * 100, 2)
     return dictionary
 
-if __name__ == "__main__":
-    # # languages
-    # best_languages = get_best(JOBS, "languages")
-    # sorted_best_languages = dict(sorted(best_languages.items(), key=lambda item: item[1], reverse=True))
-    # print(sorted_best_languages)
-    # # percent
-    # print(percent_of_dict(sorted_best_languages, len(JOBS)))
+# if __name__ == "__main__":
+#     # # languages
+#     # best_languages = get_best(JOBS, "languages")
+#     # sorted_best_languages = dict(sorted(best_languages.items(), key=lambda item: item[1], reverse=True))
+#     # print(sorted_best_languages)
+#     # # percent
+#     # print(percent_of_dict(sorted_best_languages, len(JOBS)))
 
-    # # libraries
-    # best_libraries = get_best(JOBS, "libraries")
-    # sorted_best_libraries = dict(sorted(best_libraries.items(), key=lambda item: item[1], reverse=True))
-    # print(sorted_best_libraries)
-    # # percent
-    # print(percent_of_dict(sorted_best_libraries, len(JOBS)))
+#     # # libraries
+#     # best_libraries = get_best(JOBS, "libraries")
+#     # sorted_best_libraries = dict(sorted(best_libraries.items(), key=lambda item: item[1], reverse=True))
+#     # print(sorted_best_libraries)
+#     # # percent
+#     # print(percent_of_dict(sorted_best_libraries, len(JOBS)))
 
-    # # tools
-    # best_tools = get_best(JOBS, "tools")
-    # sorted_best_tools = dict(sorted(best_tools.items(), key=lambda item: item[1], reverse=True))
-    # print(sorted_best_tools)
-    # # percent
-    # print(percent_of_dict(sorted_best_tools, len(JOBS)))
+#     # # tools
+#     # best_tools = get_best(JOBS, "tools")
+#     # sorted_best_tools = dict(sorted(best_tools.items(), key=lambda item: item[1], reverse=True))
+#     # print(sorted_best_tools)
+#     # # percent
+#     # print(percent_of_dict(sorted_best_tools, len(JOBS)))
 
-    # softskills
-    best_softskills = get_best(JOBS, "softkills")
-    sorted_best_softskills = dict(sorted(best_softskills.items(), key=lambda item: item[1], reverse=True))
-    print(sorted_best_softskills)
-    # percent
-    print(percent_of_dict(sorted_best_softskills, len(JOBS)))
+#     # softskills
+#     best_softskills = get_best(JOBS, "softkills")
+#     sorted_best_softskills = dict(sorted(best_softskills.items(), key=lambda item: item[1], reverse=True))
+#     print(sorted_best_softskills)
+#     # percent
+#     print(percent_of_dict(sorted_best_softskills, len(JOBS)))
           
+def hit_it_boy():
+    best_languages = get_best(JOBS, "languages")
+    sorted_best_languages = percent_of_dict(dict(sorted(best_languages.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
+    sorted_best_languages_keys = list(sorted_best_languages.keys())
 
+    best_libraries = get_best(JOBS, "libraries")
+    sorted_best_libraries = percent_of_dict(dict(sorted(best_libraries.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
+    sorted_best_libraries_keys = list(sorted_best_libraries.keys())
 
+    best_tools = get_best(JOBS, "tools")
+    sorted_best_tools = percent_of_dict(dict(sorted(best_tools.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
+    sorted_best_tools_keys = list(sorted_best_tools.keys())
+
+    best_softskills = get_best(JOBS, "softkills")
+    sorted_best_softskills = percent_of_dict(dict(sorted(best_softskills.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
+    sorted_best_softskills_keys = list(sorted_best_softskills.keys())
+    hit = "import { StatsData } from '../types/stats';\n export const mockStats: StatsData = {\n languages: [\n"+"{ name: '"+f"{sorted_best_languages_keys[0]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[0]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[1]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[1]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[2]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[2]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[3]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[3]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[4]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[4]]}%'"+" },\n],libraries: ["+"{ name: '"+f"{sorted_best_libraries_keys[0]}"+"', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[0]]}%'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[1]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[1]]}%'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[2]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[2]]}%'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[3]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[3]]}%'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[4]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[4]]}%'"+" },\n],tools: ["+"{ name: '"+f"{sorted_best_tools_keys[0]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[0]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[1]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[1]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[2]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[2]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[3]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[3]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[4]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[4]]}%'"+" },\n],softSkills: [{ name: '"+f"{sorted_best_softskills_keys[0]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[0]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[1]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[1]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[2]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[2]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[3]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[3]]}%'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[4]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[4]]}%'"+" },\n],};"
+    with open('skill-scope-site-2/src/data/mockStats.ts', 'w') as f:
+        f.write(hit)
+
+if __name__ == "__main__":
+    hit_it_boy()
