@@ -1,0 +1,10 @@
+{
+    "pytorch": 30.77,
+    "django": 15.38,
+    "tensorflow": 15.38,
+    "opencv": 7.69,
+    "dash": 7.69,
+    "fabric": 7.69,
+    "matplotlib": 7.69,
+    "numpy": 7.69
+}

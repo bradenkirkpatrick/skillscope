@@ -1,6 +1,8 @@
 import pandas as pd
 import re
 from string import digits
+import json  # Add this import at the top
+import os  # Added import statement
 
 # Functions to read qualifications from text files
 def get_languages():
@@ -151,6 +153,25 @@ def generate_mock_stats():
 
     with open('skill-scope-site-2/src/data/mockStats.ts', 'w') as f:
         f.write(content)
+
+    # Ensure the 'collected_data' directory exists
+    os.makedirs('collected_data', exist_ok=True)
+
+    # Save full data for languages
+    with open('collected_data/languages_data.json', 'w') as json_file:
+        json.dump(percentages_languages, json_file, indent=4)
+    
+    # Save full data for libraries
+    with open('collected_data/libraries_data.json', 'w') as json_file:
+        json.dump(percentages_libraries, json_file, indent=4)
+    
+    # Save full data for tools
+    with open('collected_data/tools_data.json', 'w') as json_file:
+        json.dump(percentages_tools, json_file, indent=4)
+    
+    # Save full data for soft skills
+    with open('collected_data/softskills_data.json', 'w') as json_file:
+        json.dump(percentages_softskills, json_file, indent=4)
 
 # Load qualifications and jobs
 POSSIBLE_LANGUAGES = get_languages()

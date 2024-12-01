@@ -13,15 +13,15 @@ languages: [
 { name: 'opencv', value: '7.69%' },
 { name: 'dash', value: '7.69%' }
 ],tools: [
-{ name: 'autocad', value: '42.42%' },
-{ name: 'git', value: '10.91%' },
-{ name: 'docker', value: '7.27%' },
-{ name: 'kubernetes', value: '6.06%' },
-{ name: 'vmware', value: '4.85%' }
+{ name: 'autocad', value: '42.94%' },
+{ name: 'git', value: '11.04%' },
+{ name: 'docker', value: '7.36%' },
+{ name: 'kubernetes', value: '6.13%' },
+{ name: 'vmware', value: '4.91%' }
 ],softSkills: [
-{ name: 'communication', value: '31.82%' },
-{ name: 'leadership', value: '19.7%' },
-{ name: 'innovation', value: '10.14%' },
-{ name: 'documentation', value: '6.64%' },
-{ name: 'compliance', value: '5.94%' }
+{ name: 'communication', value: '32.12%' },
+{ name: 'leadership', value: '19.88%' },
+{ name: 'innovation', value: '10.24%' },
+{ name: 'documentation', value: '6.71%' },
+{ name: 'compliance', value: '6.0%' }
 ],};
