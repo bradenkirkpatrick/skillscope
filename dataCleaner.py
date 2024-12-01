@@ -49,7 +49,7 @@ unwanted_words = [
     "saunders college", "product", "engineering", "hour location", "support", "provide", 
     "position", "software", "id hours", "desired class", "class levels", "program", "company", 
     "engineeringcomputer", "nologyelec mech", "optcpt yes", "knowledge", "system", "service", 
-    "required", "ms college", "principle", "nologymechatronics eng", "ny usa", " u ", 
+    "required",  "ms college", "principle", "nologymechatronics eng", "ny usa", " u ", 
     "sciencecomputer science", "sciencesoftware compinfo", "coopinternship location", 
     "5th year", "world", "year senior", "end date", "desired end", "people", "learn", 
     "compinfo sciencecomputer", "4th year", "year juniorsenior", "nologyelectrical engineer", 
@@ -71,7 +71,7 @@ unwanted_words = [
     "sciencecomputational mathematics", "opportunity employer", "yes december", "process", "perform", "industry", "career", 
     "info compinfo", "sexual orientation", "following", "plus", "building", "internship", "technology", "usa id", "national origin",
     "processes", "employment", "value", "construction", "individual", "scienceweb mobile", "jan desired", "additional documents", 
-    "use", "market", "fulltime compensation", "drive", "testing", "research", "create"
+    "use", "market", "fulltime compensation", "requests", "drive", "testing", "research", "create"
 ]
 
 # Function to remove specific unwanted words from text

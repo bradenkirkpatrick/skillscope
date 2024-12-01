@@ -1,27 +1,27 @@
 import { StatsData } from '../types/stats';
 export const mockStats: StatsData = {
 languages: [
-{ name: 'python', value: '24.45%' },
-{ name: 'java', value: '15.11%' },
-{ name: 'sql', value: '11.81%' },
-{ name: 'matlab', value: '9.07%' },
-{ name: 'javascript', value: '8.52%' }
+{ name: 'python', value: '24.38%' },
+{ name: 'java', value: '15.07%' },
+{ name: 'sql', value: '11.78%' },
+{ name: 'matlab', value: '9.04%' },
+{ name: 'javascript', value: '8.77%' }
 ],libraries: [
-{ name: 'requests', value: '50.0%' },
-{ name: 'pytorch', value: '15.38%' },
-{ name: 'django', value: '7.69%' },
-{ name: 'tensorflow', value: '7.69%' },
-{ name: 'opencv', value: '3.85%' }
+{ name: 'pytorch', value: '30.77%' },
+{ name: 'django', value: '15.38%' },
+{ name: 'tensorflow', value: '15.38%' },
+{ name: 'opencv', value: '7.69%' },
+{ name: 'dash', value: '7.69%' }
 ],tools: [
-{ name: 'autocad', value: '38.46%' },
-{ name: 'git', value: '9.89%' },
-{ name: 'docker', value: '6.59%' },
-{ name: 'kubernetes', value: '5.49%' },
-{ name: 'vmware', value: '4.4%' }
+{ name: 'autocad', value: '42.42%' },
+{ name: 'git', value: '10.91%' },
+{ name: 'docker', value: '7.27%' },
+{ name: 'kubernetes', value: '6.06%' },
+{ name: 'vmware', value: '4.85%' }
 ],softSkills: [
-{ name: 'communication', value: '21.89%' },
-{ name: 'leadership', value: '13.47%' },
-{ name: 'communication skills', value: '10.26%' },
-{ name: 'innovation', value: '6.98%' },
-{ name: 'planning', value: '6.26%' }
+{ name: 'communication', value: '31.82%' },
+{ name: 'leadership', value: '19.7%' },
+{ name: 'innovation', value: '10.14%' },
+{ name: 'documentation', value: '6.64%' },
+{ name: 'compliance', value: '5.94%' }
 ],};
