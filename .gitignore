@@ -5,3 +5,6 @@ Search Results.html
 node_modules
 database.mv.db
 data/
+test.py
+word_frequencies.txt
+wordcloud.png
