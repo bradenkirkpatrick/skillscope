@@ -138,19 +138,19 @@ def percent_of_dict(dictionary, total):
           
 def hit_it_boy():
     best_languages = get_best(JOBS, "languages")
-    sorted_best_languages = dict(sorted(best_languages.items(), key=lambda item: item[1], reverse=True))
+    sorted_best_languages = percent_of_dict(dict(sorted(best_languages.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
     sorted_best_languages_keys = list(sorted_best_languages.keys())
 
     best_libraries = get_best(JOBS, "libraries")
-    sorted_best_libraries = dict(sorted(best_libraries.items(), key=lambda item: item[1], reverse=True))
+    sorted_best_libraries = percent_of_dict(dict(sorted(best_libraries.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
     sorted_best_libraries_keys = list(sorted_best_libraries.keys())
 
     best_tools = get_best(JOBS, "tools")
-    sorted_best_tools = dict(sorted(best_tools.items(), key=lambda item: item[1], reverse=True))
+    sorted_best_tools = percent_of_dict(dict(sorted(best_tools.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
     sorted_best_tools_keys = list(sorted_best_tools.keys())
 
     best_softskills = get_best(JOBS, "softkills")
-    sorted_best_softskills = dict(sorted(best_softskills.items(), key=lambda item: item[1], reverse=True))
+    sorted_best_softskills = percent_of_dict(dict(sorted(best_softskills.items(), key=lambda item: item[1], reverse=True)), len(JOBS))
     sorted_best_softskills_keys = list(sorted_best_softskills.keys())
     hit = "import { StatsData } from '../types/stats';\n export const mockStats: StatsData = {\n languages: [\n"+"{ name: '"+f"{sorted_best_languages_keys[0]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[0]]}'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[1]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[1]]}'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[2]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[2]]}'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[3]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[3]]}'"+" },\n"+"{ name: '"+f"{sorted_best_languages_keys[4]}"+"', value: '"+f"{sorted_best_languages[sorted_best_languages_keys[4]]}'"+" },\n],libraries: ["+"{ name: '"+f"{sorted_best_libraries_keys[0]}"+"', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[0]]}'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[1]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[1]]}'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[2]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[2]]}'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[3]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[3]]}'"+" },\n{ name: '"+f"{sorted_best_libraries_keys[4]}', value: '"+f"{sorted_best_libraries[sorted_best_libraries_keys[4]]}'"+" },\n],tools: ["+"{ name: '"+f"{sorted_best_tools_keys[0]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[0]]}'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[1]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[1]]}'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[2]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[2]]}'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[3]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[3]]}'"+" },\n"+"{ name: '"+f"{sorted_best_tools_keys[4]}"+"', value: '"+f"{sorted_best_tools[sorted_best_tools_keys[4]]}'"+" },\n],softSkills: [{ name: '"+f"{sorted_best_softskills_keys[0]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[0]]}'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[1]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[1]]}'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[2]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[2]]}'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[3]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[3]]}'"+" },\n"+"{ name: '"+f"{sorted_best_softskills_keys[4]}"+"', value: '"+f"{sorted_best_softskills[sorted_best_softskills_keys[4]]}'"+" },\n],};"
     with open('skill-scope-site-2/src/data/mockStats.ts', 'w') as f:
