@@ -22,7 +22,7 @@ def generate_wordcloud(df):
 
 def login_rit_site(driver, username, password):
     driver.get(os.getenv('LOGIN_URL'))  # Update with environment variable
-    time.sleep(2)  # Wait for the login page to load
+    time.sleep(5)  # Wait for the login page to load
 
     # Enter username
     username_field = driver.find_element(By.ID, "ritUsername")  # Update with actual field ID
@@ -33,7 +33,7 @@ def login_rit_site(driver, username, password):
     password_field.send_keys(password)
     password_field.send_keys(Keys.RETURN)
 
-    time.sleep(8)  # Wait for 2FA to complete
+    time.sleep(10)  # Wait for 2FA to complete
 
 def scrape_rit_jobs(query, num_pages=5, username='', password=''):
     driver = webdriver.Chrome()
@@ -63,7 +63,7 @@ def main():
     # print(password)
     df = scrape_rit_jobs("Software Engineer", username=username, password=password, num_pages=5)
     # Save df to a CSV file
-    df.to_csv('rit_jobs.csv', index=True)
+    df.to_csv('rit_jobs2.csv', index=True)
     # generate_wordcloud(df)
     
 if __name__ == "__main__":
