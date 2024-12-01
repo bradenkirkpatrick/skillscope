@@ -3,20 +3,107 @@ kestra
 datagrip
 putty
 filezilla
-git
 docker
-jenkins
-postman
 intellij idea
-pycharm
-eclipse
 visual studio
-sublime text
-atom
-jupyter notebook
-anaconda
-kubernetes
-terraform
 aws cli
 azure cli
 gcp cli
+Visual Studio Code
+Sublime Text
+Atom
+PyCharm
+Eclipse
+NetBeans
+Xcode
+Android Studio
+Vim
+Emacs
+Notepad++
+Brackets
+WebStorm
+PhpStorm
+RubyMine
+CLion
+GoLand
+Rider
+Jupyter Notebook
+Spyder
+RStudio
+Anaconda
+Git
+GitHub
+GitLab
+Bitbucket
+SourceTree
+Kubernetes
+Jenkins
+Travis CI
+CircleCI
+GitHub Actions
+Azure DevOps
+AWS CodePipeline
+Terraform
+Ansible
+Chef
+Puppet
+Vagrant
+VirtualBox
+VMware
+Postman
+Insomnia
+Swagger
+SoapUI
+Fiddler
+Charles Proxy
+Wireshark
+SQL Server Management Studio (SSMS)
+MySQL Workbench
+pgAdmin
+DBeaver
+Robo 3T
+MongoDB Compass
+Redis Desktop Manager
+DataGrip
+Tableau
+Power BI
+Grafana
+Kibana
+Elasticsearch
+Logstash
+Splunk
+Prometheus
+Nagios
+Zabbix
+New Relic
+Datadog
+Sentry
+Rollbar
+Bugsnag
+SonarQube
+ESLint
+Prettier
+Stylelint
+TSLint
+JSHint
+JSLint
+PyLint
+Flake8
+Black
+RuboCop
+Checkstyle
+PMD
+FindBugs
+JUnit
+NUnit
+Mocha
+Jasmine
+Jest
+RSpec
+PyTest
+Selenium
+Cypress
+Puppeteer
+TestCafe
+Cucumber
+Appium
