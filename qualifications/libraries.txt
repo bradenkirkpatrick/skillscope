@@ -1,0 +1,7 @@
+numpy
+scikit
+pandas
+wordcloud
+selenium
+bs4
+matplotlib
