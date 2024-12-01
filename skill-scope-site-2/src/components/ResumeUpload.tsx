@@ -1,12 +1,25 @@
 import React, { useCallback } from 'react';
 import { Upload } from 'lucide-react';
+import axios from 'axios';
 
 export const ResumeUpload: React.FC = () => {
-  const handleFileChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = useCallback(async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file.type === 'application/pdf') {
-      // TODO: Handle file upload
-      console.log('File selected:', file.name);
+      try {
+        const formData = new FormData();
+        formData.append('file', file, 'resume.pdf');
+        
+        await axios.post('http://localhost:5000/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        console.log('File uploaded successfully');
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
     } else {
       alert('Please select a PDF file');
     }
